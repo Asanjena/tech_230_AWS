@@ -1,13 +1,13 @@
 # tech_230_AWS
 
-### What is cloud computing & history
+### Cloud Computing
 
 Cloud computing delivers computing resources such as: storage, processing power, and software applications. It does this over the internet on a pay-as-you-go, on demand basis.
 
 Users can therefore access computing resources and utilise them remotely instead of being limited locally on individual computers. 
 
 
-History:
+**History of Cloud Computing**
 - In 50-60s, the idea around many users being able to access a single mainframe computer at the same time emerged
 - 70-80s - Advances in virtualisation with many VMs being able to run on 1 machine, creating a baseline for sharing resources and scalability
 - 90-2000s - Saw more internet based services. Web host providers were able to offer storage and virtual servers over the web. Salesforce.com came in 1999, started the idea of providing enterprise applications through a web browser.
@@ -22,7 +22,7 @@ Currently, many providers offer the followinf solutions:
 
 
 
-### Benefits of cloud computing, and pros for businesses
+### Benefits of cloud computing
 
 - Scale resources
 - Reduce costs
@@ -30,9 +30,9 @@ Currently, many providers offer the followinf solutions:
 - Access many applications and services without needing major infrastrucure investments
 
 
-### What is AWS & history
+###  Amazon Web Services (AWS)
 
-AWS (Amazon Web Services) is Amazon's cloud computing platform. It offers cloud services like: Computing power, storage, databases, analytics, networking, machne learning, and more. This allows for scalability and flexible cloud resources. 
+AWS  is Amazon's cloud computing platform. It offers cloud services like: Computing power, storage, databases, analytics, networking, machne learning, and more. This allows for scalability and flexible cloud resources. 
 
 2006 - AWS was launched to provide on demand acces to computing resources using the internet
 
@@ -62,10 +62,13 @@ It has AWS regions. These refer to their global network of data centers found in
 
 **SaaS** - Software as a Service is a model where the cloud service provider delivers software applications over the internet. Users access and use these applications through a web browser or API without the needing local installation or management. The provider handles the infrastructure, maintenance, and updates of the software.
 
+![Alt text](iaas_paas_saas.jpg)
+
 
 ### Differences between public, hybrid, and private clouds 
 
 ## Public Cloud
+
 - cloud services that are available to the general public over the internet
 
 - Resources are shared among multiple organizations or users
@@ -79,6 +82,7 @@ Start ups and small businesses, SaaS providers, and web and monile apps may use 
 
 
 ## Private Cloud
+
 - cloud infrastructure for only a single organisation.
 
 - Resources are not shared with providing greater control, security, and privacy
@@ -91,6 +95,7 @@ Businesses with data privacy concerns, regulatory compliance requirements e.g. b
 
 
 ## Hybrid Cloud 
+
 - A combination of public and private cloud environments, allowing seamless integration and data sharing between them.
 
 - Organisations can leverage both on-premises infrastructure and public cloud services to meet needs.
@@ -130,23 +135,23 @@ On premises, this will include any hardware/ infrastructure
 
 ###  How the clouds enable businesses to transfer to spending more on OpEx
 
-1. Elimination of Upfront Costs: In the cloud, businesses can leverage infrastructure provided by cloud service providers, eliminating the need for large initial CapEx outlays.
+1. **Elimination of Upfront Costs**: In the cloud, businesses can leverage infrastructure provided by cloud service providers, eliminating the need for large initial CapEx outlays.
 
-2. Scalability and Flexibility: Cloud services allow businesses to scale their resources up or down based on demand. Instead of investing in overprovisioned infrastructure to accommodate peak loads, businesses can dynamically allocate and pay for the resources they need, aligning expenses with actual usage.
+2. **Scalability** and **Flexibility**: Cloud services allow businesses to scale their resources up or down based on demand. Instead of investing in overprovisioned infrastructure to accommodate peak loads, businesses can dynamically allocate and pay for the resources they need, aligning expenses with actual usage.
 
-3. Subscription-Based Pricing: Cloud providers often offer subscription-based pricing models, where businesses pay for cloud services on a monthly or usage-based basis. This OpEx approach allows businesses to convert their infrastructure costs into ongoing operational expenses, simplifying budgeting and financial planning.
+3. **Subscription-Based Pricing**: Cloud providers often offer subscription-based pricing models, where businesses pay for cloud services on a monthly or usage-based basis. This OpEx approach allows businesses to convert their infrastructure costs into ongoing operational expenses, simplifying budgeting and financial planning.
 
-4. Maintenance and Support:  This relieves businesses from the burden of maintaining and upgrading their own infrastructure, reducing associated CapEx costs.
+4. **Maintenance and Support**:  This relieves businesses from the burden of maintaining and upgrading their own infrastructure, reducing associated CapEx costs.
 
-5. Lower Total Cost of Ownership (TCO). Buisnesses They can avoid the costs of purchasing, maintaining, and replacing hardware and software, as well as expenses related to power, cooling, physical space, and IT personnel required for on-premises infrastructure.
+5. **Lower Total Cost of Ownership (TCO)**. Buisnesses They can avoid the costs of purchasing, maintaining, and replacing hardware and software, as well as expenses related to power, cooling, physical space, and IT personnel required for on-premises infrastructure.
 
-6. Resource Optimisation: Cloud services enable businesses to optimize their resource utilization, scaling resources up during peak periods and down during low-demand periods. This flexibility helps minimize idle capacity and reduce wasted costs, maximizing the efficiency of IT investments.
+6. **Resource Optimisation**: Cloud services enable businesses to optimize their resource utilization, scaling resources up during peak periods and down during low-demand periods. This flexibility helps minimize idle capacity and reduce wasted costs, maximizing the efficiency of IT investments.
 
-7. Access to Advanced Technologies: By leveraging the cloud, businesses can access cutting-edge technologies such as artificial intelligence, machine learning, big data analytics, and IoT without the need for upfront CapEx investment
+7. **Access to Advanced Technologies**: By leveraging the cloud, businesses can access cutting-edge technologies such as artificial intelligence, machine learning, big data analytics, and IoT without the need for upfront CapEx investment
 
 
-### 1-3 cases on companies that have transfered to the cloud and how this has benefitted them 
+### Cases of companies that have transfered to the cloud
 
-1) Netflix - can scale it's infrastructure to handle big increases in streaming demand e.g., during popular show releases. 
+1) **Netflix** - can scale it's infrastructure to handle big increases in streaming demand e.g., during popular show releases. 
 
 Netflix uses AWS and its cloud infrastructure allows Netflix to provide it's contents globally. 
