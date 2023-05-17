@@ -155,3 +155,240 @@ On premises, this will include any hardware/ infrastructure
 1) **Netflix** - can scale it's infrastructure to handle big increases in streaming demand e.g., during popular show releases. 
 
 Netflix uses AWS and its cloud infrastructure allows Netflix to provide it's contents globally. 
+
+
+
+
+
+
+
+
+
+
+
+### EC2 setup on AWS
+
+## Launching an EC2 Instance
+
+1. Make sure you login to your accound
+
+2. Check that you are in the right region using the drop down near your username. For this demonstartion, we will use Europe (Ireland)
+
+3. From here, search for EC2 in the search bar.
+
+**note** An EC2 instance is a VM
+
+## Creating our first instance
+
+1. Click the orange button that says 'launch instance' (add image)
+
+2. In the page that loads, we will configure our EC2 instance. (add image)
+
+3. Under **Name and tags**, use the format: group, name of person, and what the reason is, to form the name. For example: 'tech230_alema_nginx'
+
+4. In **Application and OS Images** we will choose our operating systems: 
+- select 'quick start' and choose 'Ubuntu'. **Note** The options available are all AMIs. 
+- In the drop down bellow this, select Ubuntu Server 20.04 LTS (HVM), SSD Volume Type (Free tier eligible) (add image)
+- Under **architecture**, select 64-bit (x86)
+
+These are the settings for this EC2, but you can always adjust to needs.
+
+5. Next, hoose your **instance type**. For this example, we selected t2_micro. (add image)
+
+6. In the **Key pair** section, you will need to select a key pair name. The key pair is used to securely connect to the instance using SSH. In this example, we need 'tech230'. (add image)
+
+7. For **Network settings**, we want to create a scurity group. This section will set rules for who can have access.
+- Select **create security group**. 
+- Cleck on the 'enter' button at the top right of this block
+- give a name to your security group (sg) e.g. tech230_alema_fisrt_sg. You can also add a description in the next box
+
+- Under **security group rule 1**, make sure that the entries look like this:
+
+![](sg_1.PNG)
+
+
+Anywhere (0.0.0.0) means that anyone with the key pair can access the instance.
+
+
+8. You can the **Configure Storage**, however we will leave it as 8 GiB.
+
+![Alt text](config_storage.PNG)
+
+
+
+### Connecting using SSH
+
+After finishing the above steps, go ahead and click 'Connect' to conect to the instance you made. 
+
+To connect using SSH, use the key taht your provider gave you (this should have been moved to your .ssh folder). In this case, it is 'tech230.pem
+
+1. In a bash terminal, we will set the permisions to make the tech230 key 'read only' for everyone. In bash terminal, type:
+
+``` 
+chmod 400 tech230.pem
+```
+
+**note** - 400 gives read only rights (-r) to the file owner and no permissions for all others 
+
+2. From AWS, copy the command underneath where it says **example** (add image)
+
+3. Paste this command into bash. If asked for a promt, enter 'yes' to veryify authenticity. It asks for this as you are adding the key to log in to the EC2 instance on the cloud for the first time.
+
+If successful, you will be logged in to your EC2 instance.
+
+### Nginx server on EC2
+
+4. Enter the following into the terminal:
+
+```
+$ sudo apt update
+$ sudo apt upgrade -y
+$ sudo apt install nginx -y
+$ sudo systemctl start nginx
+$ sudo systemctl enable nginx
+$ sudo systemctl status nginx
+
+```
+
+We cannot access the address publicly from HTTP/S because we need to change the security group to add a new rule to allow HTTP/S in addition to SSH.
+
+Under your EC2 instance page, go to the 'Security' tab and add a new 'Inbound rule' for HTTP and another one for HTTPS using 0.0.0.0/0 range, as shown below
+
+![Alt text](new_inbound_rule.PNG)
+
+
+We should now be able to acces it using the public IPv4 address from the 'INstance summary' page. 
+
+![Alt text](Nginx_welcome.PNG)
+
+
+5. To terminate/ shut down the instance, select 'instance state' > 'terminate instance':
+
+![Alt text](terminate_instance.PNG)
+
+
+
+
+### Making a MongoDB AMI
+
+First, we have to do this mannually before creating an AMI
+
+1. Create an instance on aws (like we did with nginx)
+2. Use the ssh output from the 'connect to instance page' and paste this into your bash terminal. In your bash terminal, you would input the following commands:
+
+```
+$ sudo apt update -y
+$ sudo apt upgrade -y
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927
+$ sudo apt install -y mongodb
+$ sudo system start mongodb
+sudo system enable mongod
+```
+
+**note** you can also add these commands into the 'user data' section when creating a EC2 instance:
+
+
+![Alt text](userdata_mongodb.PNG)
+
+
+
+To check that it is working, you then type:
+
+```
+sudo systemctl status mongodb
+```
+
+If it worked, you should get an output saying that it is running.
+
+3. After creating your instance, copy the ssh command and paste it into bash
+4. Type 'sudo systemctl status mongodb' again, and it should show that it is running. 
+
+## Creating the AMI
+
+Now that we have created the instance and that MongoDB is running, creating an AMI will create a snapshot of this and can be used as a template to make multiple instances. 
+
+1. in your instance summary for MongoDB, select instance state > image and templates > create an image from templates
+
+![Alt text](creating_new_db_ami_1.PNG)
+
+2. Add in your template name e.g. 'tech230_alema_mongodb_ami'
+
+3. Make sure all the other settings are the same as what we did previously. **Note** for the network settings, you can choose 'select existing security group' and choose e.g. the nginx sg that we set earlier on to set the same rules. 
+
+4. If you would like, you can add in your user data here under the **Advanced details** section (if you have not already done so earlier). 
+
+5. Click 'create launch template'
+
+
+6. To check that it is working, first terminate the EC2 instance. 
+
+7. Then, got to your EC2 Dashboard > launch instance > launch instance from template 
+
+8. choose your lauch template e.g. tech230_alema_mongodb_ami
+
+9. If you did not add user data, you can do so now:
+
+```
+$ sudo apt update -y
+$ sudo apt upgrade -y
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927
+$ sudo apt install -y mongodb
+$ sudo system start mongodb
+sudo system enable mongod
+```
+
+10. Launch the instance 
+
+11. Click on your instance id > connect > SSH client > copy the ssh command right at the bottom. (see image bellow) > paste into bash 
+
+![Alt text](ssh_client.PNG)
+
+
+
+12. 'sudo systemctl status mongodb' again to see if it has worked
+
+![Alt text](mongodb_status.PNG)
+
+
+
+### Deploying Sparta App on EC2 
+
+We need to copy our app folder onto the EC2
+
+1. In bash, locate to where the app folder is (but do not cd into app! Just loacte the the folder that contains it)
+
+2. On AWS, launch an nginx instance ()
+
+3. From the connect to instance page, copy the public DNS (this is 4. on the image bellow)
+
+![](ssh_client.PNG)
+
+4. In bash, type:
+
+```
+scp -i "~/.ssh/tech230.pem" -r app
+
+```
+
+followed by the public DNS that you copied and **:/home/ubuntu** at the end e.g.,:
+
+```
+scp -i "~/.ssh/tech230.pem" -r app ubuntu@ec2-52-49-116-5.eu-west-1.compute.amazonaws.com:/home/ubuntu
+```
+
+5. After entering this, it may take a while for the whole folder to be copied. 
+
+6. On the same SSH client section, copy the ssh command and paste it into the terminal. At the end of the output, you should see something like this:
+
+![Alt text](ssh_app_output.PNG)
+
+7. To be able to view the sparta app page, we now need to add a new rule to sg on EC2
+
+8. Go to your instance page, scroll down, and select 'security'
+
+9. add a new inboud rule:
+- The 'type' should be 'custom TCP'
+- The port should be 3000
+- 0.0.0.0
+
+10. Now if you copy the instance IP, paste it into a web browser, and add :3000, you should see the sparta app. 
