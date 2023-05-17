@@ -357,7 +357,7 @@ We need to copy our app folder onto the EC2
 
 1. In bash, locate to where the app folder is (but do not cd into app! Just loacte the the folder that contains it)
 
-2. On AWS, launch an nginx instance ()
+2. On AWS, launch an nginx instance 
 
 3. From the connect to instance page, copy the public DNS (this is 4. on the image bellow)
 
@@ -370,25 +370,54 @@ scp -i "~/.ssh/tech230.pem" -r app
 
 ```
 
+
 followed by the public DNS that you copied and **:/home/ubuntu** at the end e.g.,:
 
 ```
 scp -i "~/.ssh/tech230.pem" -r app ubuntu@ec2-52-49-116-5.eu-west-1.compute.amazonaws.com:/home/ubuntu
 ```
 
-5. After entering this, it may take a while for the whole folder to be copied. 
+**note** 'scp' stands for secure copy and is what we will use to copy the app folder.
+
+5. After entering this, it may take a while for the whole folder to be copied. Once finished, you can use 'ls' to check that the app folder appears.
 
 6. On the same SSH client section, copy the ssh command and paste it into the terminal. At the end of the output, you should see something like this:
 
 ![Alt text](ssh_app_output.PNG)
 
-7. To be able to view the sparta app page, we now need to add a new rule to sg on EC2
 
-8. Go to your instance page, scroll down, and select 'security'
+7. Now we use the following list of commands to install:
 
-9. add a new inboud rule:
+```
+$ sudo apt update
+
+$ sudo apt upgrade -y
+
+$ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+$ sudo apt install nodejs -y
+
+$ sudo npm install pm2 -g
+
+```
+
+8. 'cd' into app
+
+9. type 'npm install' or 'sudo apt install npm'
+
+10. type 'node app.js' or 'pm2 start app.js' (to run it in the background)
+
+
+
+## Running app and sg
+
+To be able to view the sparta app page, we now need to add a new rule to sg on EC2 to allow traffic through the port. 
+
+1. Go to your EC2 instance page, scroll down, and select 'security'. Edit this to add a new inboud rule:
 - The 'type' should be 'custom TCP'
 - The port should be 3000
-- 0.0.0.0
+- 0.0.0.0 (for source)
+
+![Alt text](adding_newrule.PNG)
 
 10. Now if you copy the instance IP, paste it into a web browser, and add :3000, you should see the sparta app. 
