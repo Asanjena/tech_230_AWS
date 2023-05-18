@@ -309,7 +309,7 @@ If it worked, you should get an output saying that it is running.
 
 
 
-## Creating the AMI
+## Creating the AMI/ launch templates
 
 Now that we have created the instance and that MongoDB is running, creating an AMI will create a snapshot of this and can be used as a template to make multiple instances. 
 
@@ -339,8 +339,8 @@ $ sudo apt update -y
 $ sudo apt upgrade -y
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927
 $ sudo apt install -y mongodb
-$ sudo system start mongodb
-sudo system enable mongod
+$ sudo systemctl start mongodb
+sudo systemctl enable mongod
 ```
 
 10. Launch the instance 
@@ -375,8 +375,6 @@ We need to copy our app folder onto the EC2
 scp -i "~/.ssh/tech230.pem" -r app
 
 ```
-
-
 followed by the public DNS that you copied and **:/home/ubuntu** at the end e.g.,:
 
 ```
@@ -385,12 +383,15 @@ scp -i "~/.ssh/tech230.pem" -r app ubuntu@ec2-52-49-116-5.eu-west-1.compute.amaz
 
 **note** 'scp' stands for secure copy and is what we will use to copy the app folder.
 
+**note** make sure you remember the ubuntu@ in frount of the public DNs that you paste into bash!
+
 5. After entering this, it may take a while for the whole folder to be copied. Once finished, you can use 'ls' to check that the app folder appears.
 
 6. On the same SSH client section, copy the ssh command and paste it into the terminal. At the end of the output, you should see something like this:
 
 ![Alt text](ssh_app_output.PNG)
 
+**you may need to add ~/.ssh/**
 
 7. Now we use the following list of commands to install:
 
@@ -427,3 +428,172 @@ To be able to view the sparta app page, we now need to add a new rule to sg on E
 ![Alt text](adding_newrule.PNG)
 
 10. Now if you copy the instance IP, paste it into a web browser, and add :3000, you should see the sparta app. 
+
+
+### Linking the two EC2 instances 
+
+We will link both our nginx instances to see the sparta posts page 
+
+1. Once you have both running instances running, run the following commands in your mongo bash terminal:
+
+```
+ $ cd /etc
+ $ sudo nano mongodb.conf
+ ```
+
+ 2. In the nano terminal that pops up, change the bind ip to 0.0.0.0
+
+ 
+ 3. We then need to restart and enable mongodb:
+
+ ```
+ $ sudo systemctl restart mongodb
+ & sudo systemctl enable mongodb
+ ```
+
+ 4. Go back to your EC2 instance for mongodb and add a rule to sg so that you have custom TCP '27017' and '0.0.0.0' (for source) (add image)
+
+ ![Alt text](new_inbound_rule_db.PNG)
+
+
+ In app bash terminal
+
+ 1. 'ls' check that app is there
+
+ 2. node -- version to check for version 12 
+
+ 3. Type:
+
+ ```
+ export DB_HOST=mongodb://(add private id from mongo ec2 instance summary page)/posts
+
+ e.g., export DB_HOST=mongodb://172.31.63.89/posts
+
+ ```
+
+ 4. printenv
+
+ 5. cd app
+
+ 6. npm install (sometimes, you may have to do node seed/seed.js)
+
+7. pm2 start app .js --update-env
+
+![Alt text](ap_terminal_outputs.PNG)
+
+
+To check that posts page works, copy and paste the public IPv4 adress from your nginx EC2, paste it into browser with/ posts at the end 
+
+![Alt text](Posts.PNG)
+
+
+### Creating Images for both these EC2 instances
+
+1. select your running instance > actions > images and templates > create an image
+
+![Alt text](making_image1.PNG)
+
+2. Then add a name and a description for your image. You can also add tags if you would like.
+
+![Alt text](creating_image2.PNG)
+
+3. Once you hav edone this, click the create button
+
+Follow these steps for both the MongoDB and Nginx EC2 instances 
+
+
+
+Task 1a
+
+### Adding a reverse proxy script
+
+1. Create a script file in your app bash terminal:
+
+```
+touch app-provision.sh
+```
+
+2. To edit the file and add to our scipt, we will use:
+
+```
+nano app-provision.sh
+
+```
+
+3. In the script, we wnat the following:
+
+```
+
+sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/default
+server {
+
+    listen 80 default_server;
+
+    listen [::]:80 default_server;
+
+    root /var/www/html;
+
+    server_name 18.202.19.236
+
+
+
+    location / {
+
+        proxy_pass http://18.202.19.236:3000;
+
+        proxy_http_version 1.1;
+
+        proxy_set_header Upgrade \$http_upgrade;
+
+        proxy_set_header Connection 'upgrade';
+
+        proxy_set_header Host \$host;
+
+        proxy_cache_bypass \$http_upgrade;
+
+ }
+
+    location /posts {
+
+        proxy_pass http://18.202.19.236:3000;
+
+        proxy_http_version 1.1;
+
+        proxy_set_header Upgrade \$http_upgrade;
+
+        proxy_set_header Connection 'upgrade';
+
+        proxy_set_header Host \$host;
+
+        proxy_cache_bypass \$http_upgrade;
+    }
+
+}
+
+EOF'
+
+```
+
+You have to change your server name and both proxy pass scriots to have your app EC2 public IPs
+4. Save and exit the nano terminal.
+
+5. To add execution permission, type:
+
+```
+chmod +x app-provision.sh
+```
+
+6. use 'ls' to check that file is green and therefore has the right permission
+
+7. To run the file, 
+
+```
+sudo bash ./app-provision.sh
+```
+
+8. 
+
+
+
+
+
