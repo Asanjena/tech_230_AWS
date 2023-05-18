@@ -505,8 +505,6 @@ Follow these steps for both the MongoDB and Nginx EC2 instances
 
 ### Task 1a
 
-### Adding a reverse proxy script
-
 1. Create a script file in your app bash terminal:
 
 ```
@@ -520,10 +518,11 @@ nano app-provision.sh
 
 ```
 
-3. In the script, we wnat the following:
+
+### Adding a reverse proxy script
 
 ```
-
+#!/bin/bash
 sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/default
 server {
 
@@ -572,26 +571,25 @@ server {
 
 EOF'
 
-```
-
-You have to change your server name and both proxy pass scriots to have your app EC2 public IPs
-4. Save and exit the nano terminal.
-
-5. To add execution permission, type:
+sudo systemctl restart nginx
 
 ```
-chmod +x app-provision.sh
-```
 
-6. use 'ls' to check that file is green and therefore has the right permission
 
-7. To run the file, 
+### 1b 
+To start the app in the background type the commnad:
 
 ```
-sudo bash ./app-provision.sh
+pm2 start app.js --update-env
+
 ```
 
-8. 
+**note** - if app was running before this, use 'pm2 stop app.js'
+
+
+
+
+
 
 
 
