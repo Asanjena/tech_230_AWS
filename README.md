@@ -503,7 +503,7 @@ Follow these steps for both the MongoDB and Nginx EC2 instances
 
 
 
-Task 1a
+### Task 1a
 
 ### Adding a reverse proxy script
 
