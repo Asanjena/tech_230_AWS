@@ -170,7 +170,7 @@ Netflix uses AWS and its cloud infrastructure allows Netflix to provide it's con
 
 ## Launching an EC2 Instance
 
-1. Make sure you login to your accound
+1. Make sure you login to your account
 
 2. Check that you are in the right region using the drop down near your username. For this demonstartion, we will use Europe (Ireland)
 
@@ -184,7 +184,7 @@ Netflix uses AWS and its cloud infrastructure allows Netflix to provide it's con
 
 2. In the page that loads, we will configure our EC2 instance. (add image)
 
-3. Under **Name and tags**, use the format: group, name of person, and what the reason is, to form the name. For example: 'tech230_alema_nginx'
+3. Under **Name and tags**, use the format: group, name of person, and what the reason for the EC2 is, to form the name. For example: 'tech230_alema_nginx'
 
 4. In **Application and OS Images** we will choose our operating systems: 
 - select 'quick start' and choose 'Ubuntu'. **Note** The options available are all AMIs. 
@@ -210,17 +210,17 @@ These are the settings for this EC2, but you can always adjust to needs.
 Anywhere (0.0.0.0) means that anyone with the key pair can access the instance.
 
 
-8. You can the **Configure Storage**, however we will leave it as 8 GiB.
+8. You can use the **Configure Storage** section, however we will leave it as 8 GiB.
 
 ![Alt text](config_storage.PNG)
+
+9. You can also complete the advanced details section, but we will leave this for now and go ahead and launch the EC2 instance.
 
 
 
 ### Connecting using SSH
-
-After finishing the above steps, go ahead and click 'Connect' to conect to the instance you made. 
-
-To connect using SSH, use the key taht your provider gave you (this should have been moved to your .ssh folder). In this case, it is 'tech230.pem
+ 
+To connect using SSH, use the key thatt your provider gave you (this should have been moved to your .ssh folder). In this case, it is 'tech230.pem
 
 1. In a bash terminal, we will set the permisions to make the tech230 key 'read only' for everyone. In bash terminal, type:
 
@@ -232,11 +232,11 @@ chmod 400 tech230.pem
 
 2. From AWS, copy the command underneath where it says **example** (add image)
 
-3. Paste this command into bash. If asked for a promt, enter 'yes' to veryify authenticity. It asks for this as you are adding the key to log in to the EC2 instance on the cloud for the first time.
+3. Paste this command into bash. If asked for a prompt, enter 'yes' to veryify authenticity. It asks for this as you are adding the key to log in to the EC2 instance on the cloud for the first time.
 
 If successful, you will be logged in to your EC2 instance.
 
-### Nginx server on EC2
+### Getting Nginx server on AWS EC2
 
 4. Enter the following into the terminal:
 
@@ -250,14 +250,14 @@ $ sudo systemctl status nginx
 
 ```
 
-We cannot access the address publicly from HTTP/S because we need to change the security group to add a new rule to allow HTTP/S in addition to SSH.
+To access the address publicly from HTTP/S, we have to change the security group to add a new rule to allow HTTP/S.
 
 Under your EC2 instance page, go to the 'Security' tab and add a new 'Inbound rule' for HTTP and another one for HTTPS using 0.0.0.0/0 range, as shown below
 
 ![Alt text](new_inbound_rule.PNG)
 
 
-We should now be able to acces it using the public IPv4 address from the 'INstance summary' page. 
+We should now be able to acces it using the public IPv4 address from the 'Instance summary' page. 
 
 ![Alt text](Nginx_welcome.PNG)
 
@@ -265,6 +265,10 @@ We should now be able to acces it using the public IPv4 address from the 'INstan
 5. To terminate/ shut down the instance, select 'instance state' > 'terminate instance':
 
 ![Alt text](terminate_instance.PNG)
+
+
+
+
 
 
 
@@ -302,6 +306,8 @@ If it worked, you should get an output saying that it is running.
 
 3. After creating your instance, copy the ssh command and paste it into bash
 4. Type 'sudo systemctl status mongodb' again, and it should show that it is running. 
+
+
 
 ## Creating the AMI
 
