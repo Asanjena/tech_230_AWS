@@ -8,36 +8,10 @@ sudo apt-get upgrade -y
 sudo apt-get install nginx -y
 
 # Replace default config file
-sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/default
-server {
 
-    listen 80 default_server;
-    listen [::]:80 default_server;
 
-    root /var/www/html;
-
-    server_name _;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_cache_bypass \$http_upgrade;
-    }
-
-    location /posts {
-        proxy_pass http://localhost:3000/posts;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade \$http_upgrade;
-        proxy_set_header Connection 'upgrade';
-        proxy_set_header Host \$host;
-        proxy_cache_bypass \$http_upgrade;
-    }
-}
-
-EOF'
+# Reverse proxy
+sudo sed -i 's/^                try_files $uri $uri\/ =404;/            proxy_pass http:\/\/localhost:3000\/;/g' /etc/nginx/sites-available/default
 
 # Restart nginx web server
 sudo systemctl restart nginx

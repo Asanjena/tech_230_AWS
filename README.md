@@ -521,63 +521,28 @@ nano app-provision.sh
 
 ### Adding a reverse proxy script
 
+In the nano terminal:
+
+#!bin/bash
+
+sudo sed -s "s/try_files \$uri \$uri\/ =404;/ proxy_pass http:\/\/localhost:3000\/;
+
+or
 ```
-#!/bin/bash
-sudo bash -c 'cat <<EOF > /etc/nginx/sites-available/default
-server {
-
-    listen 80 default_server;
-
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-
-    server_name 18.202.19.236
-
-
-
-    location / {
-
-        proxy_pass http://18.202.19.236:3000;
-
-        proxy_http_version 1.1;
-
-        proxy_set_header Upgrade \$http_upgrade;
-
-        proxy_set_header Connection 'upgrade';
-
-        proxy_set_header Host \$host;
-
-        proxy_cache_bypass \$http_upgrade;
-
- }
-
-    location /posts {
-
-        proxy_pass http://18.202.19.236:3000;
-
-        proxy_http_version 1.1;
-
-        proxy_set_header Upgrade \$http_upgrade;
-
-        proxy_set_header Connection 'upgrade';
-
-        proxy_set_header Host \$host;
-
-        proxy_cache_bypass \$http_upgrade;
-    }
-
-}
-
-EOF'
+sudo sed -i 's/^                try_files $uri $uri\/ =404;/            proxy_pass http:\/\/localhost:3000\/;/g' /etc/nginx/sites-available/default
 
 sudo systemctl restart nginx
 
 ```
+chmod +x app-provision.sh (to give permission to execute)
+
+./app-provision.sh (to run)
+
+sudo nano /etc/nginx/sites-available/default (to check that the changes have been made)
 
 
 ### 1b 
-To start the app in the background type the commnad:
+To start the app in the background type the command:
 
 ```
 pm2 start app.js --update-env
