@@ -382,3 +382,17 @@ pm2 start app.js --update-env
 ```
 
 **note** - if app was running before this, use 'pm2 stop app.js'
+
+
+### 1c
+
+1. Cd to where you would like to create your new app repo
+2. Use git init 
+3. On github, create a new repo called 'app'
+4. git remote add origin http://github.com/Asanjena/app.git
+5. git add .
+6. Git commit
+7. git push origin main
+
+In your vm, you would the git clone http://github.com/Asanjena/app.git
+
