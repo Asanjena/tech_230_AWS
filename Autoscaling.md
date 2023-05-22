@@ -191,6 +191,8 @@ We also want to select 'Target tracking scaling policy'
 
 Copy this and paste it into a web browser. If successful, you should then be able to see the sparta app page.
 
+![Alt text](lb_app_page.PNG)
+
 
 
 
