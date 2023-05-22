@@ -11,7 +11,8 @@ sudo apt-get install nginx -y
 
 
 # Reverse proxy
-sudo sed -i 's/^                try_files $uri $uri\/ =404;/            proxy_pass http:\/\/localhost:3000\/;/g' /etc/nginx/sites-available/default
+
+sudo sed -i 's+try_files $uri $uri/ =404;+proxy_pass http://localhost:3000/;+' /etc/nginx/sites-available/default
 
 # Restart nginx web server
 sudo systemctl restart nginx
@@ -29,12 +30,11 @@ echo -e "\nexport DB_HOST=mongodb://172.31.59.25:27017/posts" | sudo tee -a .bas
 source .bashrc
 
 # Get repo with app folder
-mkdir ~/repo
-cd ~/repo
-git clone https://github.com/bradley-woods/tech230-aws.git
+
+git clone https://github.com/Asanjena/app.git
 
 # Install the app
-cd ~/repo/tech_230_aws/app
+cd app
 sudo npm install
 
 # Seed the database
