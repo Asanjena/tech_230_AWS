@@ -33,7 +33,9 @@ sudo systemctl enable nginx
 
 6. Click on the AMI id to get to it's summary page. As you will see, your AMI is unnamed. To name it, click on the pen icon and give it the same name as your AMI (tech230_alema_nginx_ami1).
 
-### Creating a launch template
+### Creating a launch template 
+
+The launch template will be used by asg - need to add in run app command in background
 
 1. On the side bar, navigate to launch template > create launch template.
 
@@ -43,7 +45,7 @@ sudo systemctl enable nginx
 
 4. Fill out the rest as ususal: instance type (T2 micro), key pair (tech230), select your existing security group that allows http.
 
-5. In advanced settings, you can add in the commands to run nginx in the user data section.
+5. In advanced settings, you can add in the commands to run nginx in the user data section (but not needed).
 
 6. Click 'create launch template'.
 
@@ -68,6 +70,11 @@ sudo apt-get upgrade -y
 # Install nginx web server
 sudo apt-get install nginx -y
 
+
+# Reverse proxy
+
+sudo sed -i 's+try_files $uri $uri/ =404;+proxy_pass http://localhost:3000/;+' /etc/nginx/sites-available/default
+
 # Restart nginx web server
 sudo systemctl restart nginx
 
@@ -79,16 +86,27 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install nodejs -y
 sudo npm install pm2 -g
 
+# Add database host IP info to .bashrc
+echo -e "\nexport DB_HOST=mongodb://172.31.59.25:27017/posts" | sudo tee -a .bashrc
+source /home/ubuntu/.bashrc
 
 # Get repo with app folder
-git clone https://github.com/Asanjena/app.git
+
+git clone https://github.com/Asanjena/app.git /home/ubuntu/repo 
 
 # Install the app
-cd app
+
+cd /home/ubuntu/app   
 sudo npm install
+
+# Seed the database
+node seeds/seed.js
 
 # Start the app
 pm2 start app.js --update-env
+
+# If already started, restart (idempotency)
+pm2 restart app.js --update-env
 
 
 ```
