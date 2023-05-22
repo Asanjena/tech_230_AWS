@@ -50,6 +50,9 @@ sudo systemctl enable nginx
 7. Make sure you delete the instance that was running previously
 
 
+
+
+
 ### Running the app on a new autoscalling group
 
 1. Launch a new instance (following the steps above) for the app. In the user data, add in everything you need for the app to run:
@@ -87,64 +90,106 @@ sudo npm install
 # Start the app
 pm2 start app.js --update-env
 
-# If already started, restart (idempotency)
-pm2 restart app.js --update-env
 
 ```
+
 
 2. Create an ami (for app launch template)
 
 3. On ami summary page, name ami appropriately e.g. tech230-alema-app-ami2
 
-4. On the side bar, navigate to launch template > create launch template. Follow the steps outlined above to create a launch template specifically for the app. Nme the launch template appropriately e.g., tech230_alema_app_LT
+4. On the side bar, navigate to launch template > create launch template. Follow the steps outlined above to create a launch template specifically for the app. Name the launch template appropriately e.g., tech230_alema_app_LT
 
-**Note** - Use ami you have just created for the app. Again, you can add in the commands needed for the app in the uder data section. 
+**Note** - Select the AMI you have just created for the app. Again, you can add in the commands needed for the app in the user data section. 
 
 5. Terminate previous instance
 
-### Auto scaling groups
+
+
+
+### Auto scaling groups for the app
 
 1. On the side bar, click on 'Auto Scaling Groups' (located right at the bottom)
 
 ![](as_button.PNG)
 
+
 2. You should see a page like this come up:
 
 ![Alt text](ASpage.PNG)
 
+
 Click 'create auto scale'. 
 
 
-### Creating an auto scale group
+
+### Creating an auto scale group (ASG)
 
 The next steps will go through the 7 steps for setting up auto scale:
 
-1. First step is to choose lauch template or configuration: Here, give your ASG a suitable name and se;ect the launch template relavant for teh app. Then click next
+
+1. First step is to choose 'lauch template or configuration': Here, give your ASG a suitable name and select the launch template relavant for the app. Then click next.
 
 2. The second step is to choose your launch options. Here, we want to select the following availability zones for the app:
 
+
+
 ![](availabillityzones.PNG)
 
-3. We then want to select 'attach a new load balancer' and 'application load balancer'. We also want to give the load balancer an approriate name e.g., tech230-alema-app-ASG-LB. As you can see below, the 3 availability zones are already filled in:
+
+
+3. We then want to select 'attach a new load balancer' and 'application load balancer'. 
+
+We also want to give the load balancer an approriate name e.g., tech230-alema-app-ASG-LB.
+
+
+As you can see below, the 3 availability zones are already filled in:
 
 ![Alt text](LB.PNG)
+
+
 
 You should also create a new target group and name it appropriately:
 
 ![Alt text](targetgroup.PNG)
 
+
+
 Finally, select the tick box for 'Turn on Elastic Load Balancing health checks'
 
 
-4. Step 4 is 'Configure group size and scaling policies'. Here you can set the desired minimum and max capcities. For the app we did: desired 2, minimum 2, and max 3
+
+4. Step 4 is 'Configure group size and scaling policies'. Here you can set the desired minimum and max capcities. For the app we did: desired 2, minimum 2, and max 3.
+
+
 
 We also want to select 'Target tracking scaling policy'
 
-5. For the next step, you can enable notifications if you would like to be notified each time an instance is made/ removed. For this, we will leave it as the default settings.
 
-6. In the next step, we will add a tag. This is important so that the instances are taged and not nameless. For 'key' we will say 'Name', and for 'value' we can put 'tech230-alema-app-HA-SC' - the end of this name will help to remeber that this is the one linked to the autoscaling group
 
-7. Finally, you are presented with a review page. After reviewing, you can go ahead and creat the ASG. 
+5. For the next step, you can enable notifications if you would like to be notified each time an instance is made/ removed. For this demo, we will leave it as the default settings.
+
+
+
+6. In the next step, we will add a tag. This is important so that the instances are taged and not nameless. For 'Key' we will say 'Name', and for 'Value' we can put 'tech230-alema-app-HA-SC'
+
+**Note** the -HA-SC (high availability and scalability) part of this name will help to remeber that this is the one linked to the ASG.
+
+
+
+7. Finally, you are presented with a review page. After reviewing, you can go ahead and create the ASG. 
+
+
+
+8. Go to Load balancers (on the left hand side) and search for your load balancer. Scroll down and you should be able to see the DNS name. Copy this and paste it into a web browser.
+
+
+
+![Alt text](DNS.PNG)
+
+
+
+Copy this and paste it into a web browser. If successful, you should then be able to see the sparta app page.
 
 
 
