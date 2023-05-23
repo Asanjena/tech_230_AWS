@@ -92,11 +92,11 @@ source /home/ubuntu/.bashrc
 
 # Get repo with app folder
 
-git clone https://github.com/Asanjena/app.git /home/ubuntu/repo 
+git clone https://github.com/Asanjena/app.git /home/ubuntu/repo
 
 # Install the app
 
-cd /home/ubuntu/app   
+cd /home/ubuntu/repo/app   
 sudo npm install
 
 # Seed the database
@@ -199,7 +199,7 @@ We also want to select 'Target tracking scaling policy'
 
 
 
-8. Go to Load balancers (on the left hand side) and search for your load balancer. Scroll down and you should be able to see the DNS name. Copy this and paste it into a web browser.
+8. Go to Load balancers (on the left hand side) and search for your load balancer. Scroll down and you should be able to see the DNS name. Copy this and paste it into a web browser. It may take some time for the app page to load as the two EC2 instances are spining up. 
 
 
 
@@ -210,6 +210,33 @@ We also want to select 'Target tracking scaling policy'
 Copy this and paste it into a web browser. If successful, you should then be able to see the sparta app page.
 
 ![Alt text](lb_app_page.PNG)
+
+
+
+
+
+### DB user data
+
+#!/bin/bash
+
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927
+
+echo "deb https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+
+sudo apt-get install -y mongodb-org=3.2.20 mongodb-org-server=3.2.20 mongodb-org-shell=3.2.20 mongodb-org-mongos=3.2.20 mongodb-org-tools=3.2.20
+
+sudo sed -i "s
+
+sudo systemctl restart mongod
+sudo systemctl enable mongod
+
 
 
 
