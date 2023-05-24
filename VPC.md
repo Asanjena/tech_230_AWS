@@ -122,3 +122,6 @@ sudo apt-get install nginx -y
 
 ![Alt text](vpc_nginx.PNG)
 
+
+
+### 2 Tier architecture 

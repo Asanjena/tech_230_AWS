@@ -396,3 +396,111 @@ pm2 start app.js --update-env
 
 In your vm, you would the git clone http://github.com/Asanjena/app.git
 
+
+### 1d app user data
+
+
+#!/bin/bash
+
+
+sudo apt-get update -y  
+
+ 
+sudo apt-get upgrade -y
+
+
+sudo apt-get install nginx -y
+
+
+sudo sed -i "s/try_files \$uri \$uri\/ =404;/proxy_pass http:\/\/localhost:3000\/;/" /etc/nginx/sites-available/default
+
+
+sudo sed -i "s/# pass PHP scripts to FastCGI server/location \/posts {\n\t\tproxy_pass http:\/\/localhost:3000\/posts;\n\t}/" /etc/nginx/sites-available/default
+
+
+sudo systemctl restart nginx
+
+ 
+sudo systemctl enable nginx
+
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
+ 
+sudo apt-get install nodejs -y
+
+
+sudo npm install pm2 -g
+
+export DB_HOST=mongodb://192.168.10.150:27017/posts
+
+
+source ~/.bashrc
+
+
+git clone https://github.com/Asanjena/app.git /home/ubuntu/repo
+
+
+cd /home/ubuntu/repo/app  
+
+node seeds/seed.js 
+
+pm2 start app.js --update-env
+
+pm2 restart app.js --update-env
+
+
+
+
+
+
+
+
+
+
+
+
+### 1d and 1e
+
+Make sue you have ssh'ed into the db vm and then the app vm 
+
+To get the DB_HOST env variable and bind IP set up, in bash script:
+
+sudo sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/g' /etc/mongod.conf
+
+DB user data 
+
+#!/bin/bash
+
+ 
+
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+ 
+
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv D68FA50FEA312927
+
+ 
+
+echo "deb https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.2 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.2.list
+
+ 
+
+sudo apt-get update -y
+sudo apt-get upgrade -y
+
+ 
+
+sudo apt-get install -y mongodb-org=3.2.20 mongodb-org-server=3.2.20 mongodb-org-shell=3.2.20 mongodb-org-mongos=3.2.20 mongodb-org-tools=3.2.20
+
+ 
+
+sudo sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/g' /etc/mongod.conf
+
+ 
+
+sudo systemctl restart mongod
+sudo systemctl enable mongod
+
+
+
