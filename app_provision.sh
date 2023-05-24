@@ -26,7 +26,7 @@ sudo apt-get install nodejs -y
 sudo npm install pm2 -g
 
 # Add database host IP info to .bashrc
-echo -e "\nexport DB_HOST=mongodb://172.31.59.25:27017/posts" | sudo tee -a .bashrc
+echo -e "\export DB_HOST=mongodb://172.31.59.25:27017/posts" | sudo tee -a .bashrc
 source .bashrc
 
 # Get repo with app folder
