@@ -125,3 +125,56 @@ sudo apt-get install nginx -y
 
 
 ### 2 Tier architecture 
+
+To create a 2 tier architecture, we will follow the steps above but with some slight changes:
+
+### 1. Create your vpc
+
+1. Follow the same steps above, but this time change the name so that you know it is for your 2 tier vpc.
+
+### Setting an Internet Gateway
+
+1. Again, make sure that you set a suitable name and follow the steps above
+
+
+### Subnets
+
+1. For your first (public) subnet give it a suitable name (identify that it is the public subnet) and:
+
+- set CIDR to 10.0.2.0/24
+- set availability zone to 1a
+
+2. Add a new private subnet (for db). Call it tech230-alema-2tier-private-subnet
+
+- set availability zone to 1b 
+- CIDR block to 10.0.3.0/24
+
+![Alt text](2-tier-subnets.PNG)
+
+Click create
+
+### Create you public route table
+
+1. Give it a name
+2. Select your vpc 
+
+![Alt text](2tier-rt.PNG)
+
+you do not have to create a private one. 
+
+### Associating your subnet
+
+We want to associate our public subnet to the public route table
+
+1. To do this, we can follow the previous step 
+
+you should still see that your private subnet is under un
+
+### Linking route table to internet gateway 
+
+1. Next to the subnet association tab, click 'routes'
+2. Click on 'edit routes' and then 'add route'
+3. In destination, you want: 0.0.0.0/0
+
+
+
