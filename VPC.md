@@ -2,7 +2,7 @@
 
 Virtal Private Clouds (VPC) are private clouds hosted within a public cloud. They are offered by cloud service providers such as AWS and Azure. With a vpc, you can generate and manage a isolated network environment 
 
-(add diagram)
+![Alt text](vpc.jpg)
 
 
 When you create an account on AWS, it will set up a default vpc in every region. 
@@ -11,11 +11,14 @@ When you create an account on AWS, it will set up a default vpc in every region.
 Features of a vpc:
 
 - Subnets. These are like the 'rooms' for a vpc. They can 'talk' to each other through something called a route table and are liked to availability zones. 
+- Route tables
+-Internet Gateways
+-Virtual machines.
 
 
 
 
-The we will go through the following steps for setting up everything we need for a nginx vpc: 1. Setting up a VPC 2. Setting an Internet Gateway 3. Connecting the internet gateway to the VPC 4. Creating subnets - for this demo, a private subnet 5. Creating a public route table 6. Linking route table to the Internet Gateway 7. Creating virtual machine (in this demo, one for just nginx).
+We will go through the following steps for setting up everything we need for a nginx vpc: 1. Setting up a VPC 2. Setting an Internet Gateway 3. Connecting the internet gateway to the VPC 4. Creating subnets - for this demo, a private subnet 5. Creating a public route table 6. Linking route table to the Internet Gateway 7. Creating virtual machine (in this demo, one for just nginx).
 
 ## 1) Setting up a VPC
 
@@ -48,7 +51,7 @@ Afte setting up a vpc, you should see an option called 'Internet gateway' on the
 
 ## 3) Connect internet gateway to vpc
 
-Afte setting the internet gateway, you should see a green bar at the top of the screen with the option to click on 'attach to vpc'
+After setting the internet gateway, you should see a green bar at the top of the screen with the option to click on 'attach to vpc'
 
 1. Click on 'attach to vpc'
 2. Under **available vpc**, search for your name/ vpc, click on the one that appears and attach to internet gateway
