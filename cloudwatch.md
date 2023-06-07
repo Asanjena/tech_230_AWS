@@ -19,13 +19,13 @@ another benfit of cw is that there are available statistics - dashboard - can us
 
 1. On your cloudwatch console screen, scroll down and select 'monitoring'. On the lower right hand side, you sould the see the option to 'add to dashboard'. Click on this.
 
-![Alt text](add-to-dashboard.PNG)
+![Alt text](images/add-to-dashboard.PNG)
 
 
 2. Click on 'create new dashboard' and give your dashboard a name.
 3. Click 'add to dashboard'
 
-![Alt text](create-new-dashboard.PNG)
+![Alt text](images/create-new-dashboard.PNG)
 
 
 
@@ -40,38 +40,38 @@ another benfit of cw is that there are available statistics - dashboard - can us
 
 1. On the sidebar menu, navigate alarms > all alarms
 
-![Alt text](alarms-allalarms.PNG)
+![Alt text](images/alarms-allalarms.PNG)
 
 2. Create an alarm 
 
-![Alt text](ca.PNG)
+![Alt text](images/ca.PNG)
 
 3. select metric > ect . per instance metric
 
-![Alt text](select-metric.PNG)
+![Alt text](images/select-metric.PNG)
 
 
 4. Copy and paste you EC2 instance ID into the search bar. Then select the id that has CPUUtilsation nect to it.
 
-![Alt text](4.PNG)
+![Alt text](images/4.PNG)
 
 5. For the next step, make sure that you have 'average' selected for statistics.
 
-![Alt text](statistics-average.PNG)
+![Alt text](images/statistics-average.PNG)
 
 6. Select the threshold type to 'static' and 'greater/ equal to for 'whenever CPUUtilization is...'
 
-![Alt text](conditions.PNG)
+![Alt text](images/conditions.PNG)
 
 7. Make sure that you select the 'in alarm' option. As you can see below, you also want to choose 'select an existing SNS topic' and send a notification to 'CPU-usage'. 
 
 8. You should also input the email that you would like your notifications to go to:
 
-![Alt text](alarm-trigger.PNG)  > next 
+![Alt text](images/alarm-trigger.PNG)  > next 
 
 9. Finally, you can give your alarm a name, including a description. 
 
-![Alt text](alarm-name.PNG)
+![Alt text](images/alarm-name.PNG)
 
 preview page appears - check and click create alarm. 
 
@@ -80,4 +80,4 @@ preview page appears - check and click create alarm.
 
 When your alarm goes off, you should receive an email like this:
 
-![Alt text](email.PNG)
+![Alt text](images/email.PNG)

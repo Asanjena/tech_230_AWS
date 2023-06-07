@@ -2,7 +2,7 @@
 
 Virtal Private Clouds (VPC) are private clouds hosted within a public cloud. They are offered by cloud service providers such as AWS and Azure. With a vpc, you can generate and manage a isolated network environment 
 
-![Alt text](vpc.jpg)
+![Alt text](images/vpc.jpg)
 
 
 When you create an account on AWS, it will set up a default vpc in every region. 
@@ -34,7 +34,7 @@ In the AWS search bar, type 'vpc':
 ```
 5. Click 'create vpc'
 
-![Alt text](vpc1.PNG)
+![Alt text](images/vpc1.PNG)
 
 
 ## 2) Setting an Internet Gateway
@@ -46,7 +46,7 @@ Afte setting up a vpc, you should see an option called 'Internet gateway' on the
 3. type an appropriate name e.g., tech230-alema-nginx-vpc-IGW
 4. click 'create internet gateway'
 
-![Alt text](vpc2.PNG)
+![Alt text](images/vpc2.PNG)
 
 
 ## 3) Connect internet gateway to vpc
@@ -57,7 +57,7 @@ After setting the internet gateway, you should see a green bar at the top of the
 2. Under **available vpc**, search for your name/ vpc, click on the one that appears and attach to internet gateway
 
 
-![Alt text](vpc3.PNG)
+![Alt text](images/vpc3.PNG)
 
 ## 4) Creating public subnet
 
@@ -71,7 +71,7 @@ After setting the internet gateway, you should see a green bar at the top of the
 10.0.2.0/24
 ```
 
-![Alt text](vpc5.PNG)
+![Alt text](images/vpc5.PNG)
 
 ## 5) Creating a public route table
 
@@ -81,7 +81,7 @@ After setting the internet gateway, you should see a green bar at the top of the
 4. Select vpc (tech230-alema-nginx-vpc)
 5. Click 'create RT'
 
-![Alt text](vpc6.PNG)
+![Alt text](images/vpc6.PNG)
 
 
 ## 6) Linking route table to the public subnet
@@ -109,7 +109,7 @@ Now if you check under explicit subnet associations, you should see your subnet 
 5. Click save changes 
 
 
-![Alt text](vpc7.PNG)
+![Alt text](images/vpc7.PNG)
 
 ## 8) Create virtual machine 
 
@@ -120,7 +120,7 @@ For this demo, we will just create one for nginx
 3. Click on the edit button for network settings > make sure that auto assign public IP is **enabled**
 4. For existsing security groups, we must create a new one. This showuld include 3000, SSH (22), and http(80).
 
-![Alt text](vpc_sg.PNG)
+![Alt text](images/vpc_sg.PNG)
 
 5. We will then add the nginx commands in user data:
 
@@ -136,7 +136,7 @@ sudo apt-get install nginx -y
 
 6. Finally, we will click on 'launch'. Then on the instance details page, copy the public IPv4 into a web browser using http. You should see the nginx welcome page load after some time. 
 
-![Alt text](vpc_nginx.PNG)
+![Alt text](images/vpc_nginx.PNG)
 
 
 
@@ -165,7 +165,7 @@ To create a 2 tier architecture, we will follow the steps above but with some sl
 - set availability zone to 1b 
 - CIDR block to 10.0.3.0/24
 
-![Alt text](2-tier-subnets.PNG)
+![Alt text](images/2-tier-subnets.PNG)
 
 Click create
 
@@ -174,7 +174,7 @@ Click create
 1. Give it a name
 2. Select your vpc 
 
-![Alt text](2tier-rt.PNG)
+![Alt text](images/2tier-rt.PNG)
 
 you do not have to create a private one. 
 
@@ -206,7 +206,7 @@ We want to associate our public subnet to the public route table
 
 For our db, we only really need to allow port 27017:
 
-![Alt text](db-vpc-sg.PNG)
+![Alt text](images/db-vpc-sg.PNG)
 
 7. Then add in your user data:
 
@@ -261,7 +261,7 @@ Then launch instance.
 
 4. When creating a new sg, we need to allow ssh and http. **note** - as our reverse proxy should work, we do not really need to add port 3000
 
-![Alt text](app-vpc-sg.PNG)
+![Alt text](images/app-vpc-sg.PNG)
 
 5. In user data:
 

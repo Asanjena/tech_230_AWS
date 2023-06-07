@@ -60,7 +60,7 @@ It has AWS regions. These refer to their global network of data centers found in
 
 **SaaS** - Software as a Service is a model where the cloud service provider delivers software applications over the internet. Users access and use these applications through a web browser or API without the needing local installation or management. The provider handles the infrastructure, maintenance, and updates of the software.
 
-![Alt text](iaas_paas_saas.jpg)
+![Alt text](images/iaas_paas_saas.jpg)
 
 
 ### Differences between public, hybrid, and private clouds 

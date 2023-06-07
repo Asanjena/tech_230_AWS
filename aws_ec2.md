@@ -44,7 +44,7 @@ Anywhere (0.0.0.0) means that anyone with the key pair can access the instance.
 
 8. You can use the **Configure Storage** section, however we will leave it as 8 GiB.
 
-![Alt text](config_storage.PNG)
+![Alt text](images/config_storage.PNG)
 
 9. You can also complete the advanced details section, but we will leave this for now and go ahead and launch the EC2 instance.
 
@@ -86,17 +86,17 @@ To access the address publicly from HTTP/S, we have to change the security group
 
 Under your EC2 instance page, go to the 'Security' tab and add a new 'Inbound rule' for HTTP and another one for HTTPS using 0.0.0.0/0 range, as shown below
 
-![Alt text](new_inbound_rule.PNG)
+![Alt text](images/new_inbound_rule.PNG)
 
 
 We should now be able to acces it using the public IPv4 address from the 'Instance summary' page. 
 
-![Alt text](Nginx_welcome.PNG)
+![Alt text](images/Nginx_welcome.PNG)
 
 
 5. To terminate/ shut down the instance, select 'instance state' > 'terminate instance':
 
-![Alt text](terminate_instance.PNG)
+![Alt text](images/terminate_instance.PNG)
 
 
 
@@ -124,7 +124,7 @@ sudo system enable mongod
 **note** you can also add these commands into the 'user data' section when creating a EC2 instance:
 
 
-![Alt text](userdata_mongodb.PNG)
+![Alt text](images/userdata_mongodb.PNG)
 
 
 
@@ -147,7 +147,7 @@ Now that we have created the instance and that MongoDB is running, creating an A
 
 1. in your instance summary for MongoDB, select instance state > image and templates > create an image from templates
 
-![Alt text](creating_new_db_ami_1.PNG)
+![Alt text](images/creating_new_db_ami_1.PNG)
 
 2. Add in your template name e.g. 'tech230_alema_mongodb_ami'
 
@@ -179,13 +179,13 @@ sudo systemctl enable mongod
 
 11. Click on your instance id > connect > SSH client > copy the ssh command right at the bottom. (see image bellow) > paste into bash 
 
-![Alt text](ssh_client.PNG)
+![Alt text](images/ssh_client.PNG)
 
 
 
 12. 'sudo systemctl status mongodb' again to see if it has worked
 
-![Alt text](mongodb_status.PNG)
+![Alt text](images/mongodb_status.PNG)
 
 
 
@@ -221,7 +221,7 @@ scp -i "~/.ssh/tech230.pem" -r app ubuntu@ec2-52-49-116-5.eu-west-1.compute.amaz
 
 6. On the same SSH client section, copy the ssh command and paste it into the terminal. At the end of the output, you should see something like this:
 
-![Alt text](ssh_app_output.PNG)
+![Alt text](images/ssh_app_output.PNG)
 
 **you may need to add ~/.ssh/**
 
@@ -257,7 +257,7 @@ To be able to view the sparta app page, we now need to add a new rule to sg on E
 - The port should be 3000
 - 0.0.0.0 (for source)
 
-![Alt text](adding_newrule.PNG)
+![Alt text](images/adding_newrule.PNG)
 
 10. Now if you copy the instance IP, paste it into a web browser, and add :3000, you should see the sparta app. 
 
@@ -285,7 +285,7 @@ We will link both our nginx instances to see the sparta posts page
 
  4. Go back to your EC2 instance for mongodb and add a rule to sg so that you have custom TCP '27017' and '0.0.0.0' (for source) (add image)
 
- ![Alt text](new_inbound_rule_db.PNG)
+ ![Alt text](images/new_inbound_rule_db.PNG)
 
 
  In app bash terminal
@@ -311,23 +311,23 @@ We will link both our nginx instances to see the sparta posts page
 
 7. pm2 start app .js --update-env
 
-![Alt text](ap_terminal_outputs.PNG)
+![Alt text](images/ap_terminal_outputs.PNG)
 
 
 To check that posts page works, copy and paste the public IPv4 adress from your nginx EC2, paste it into browser with/ posts at the end 
 
-![Alt text](Posts.PNG)
+![Alt text](images/Posts.PNG)
 
 
 ### Creating Images for both these EC2 instances
 
 1. select your running instance > actions > images and templates > create an image
 
-![Alt text](making_image1.PNG)
+![Alt text](images/making_image1.PNG)
 
 2. Then add a name and a description for your image. You can also add tags if you would like.
 
-![Alt text](creating_image2.PNG)
+![Alt text](images/creating_image2.PNG)
 
 3. Once you hav edone this, click the create button
 

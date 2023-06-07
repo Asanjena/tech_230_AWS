@@ -134,7 +134,7 @@ pm2 restart app.js --update-env
 
 2. You should see a page like this come up:
 
-![Alt text](ASpage.PNG)
+![Alt text](images/ASpage.PNG)
 
 
 Click 'create auto scale'. 
@@ -152,7 +152,7 @@ The next steps will go through the 7 steps for setting up auto scale:
 
 
 
-![](availabillityzones.PNG)
+![](images/availabillityzones.PNG)
 
 
 
@@ -163,13 +163,13 @@ We also want to give the load balancer an approriate name e.g., tech230-alema-ap
 
 As you can see below, the 3 availability zones are already filled in:
 
-![Alt text](LB.PNG)
+![Alt text](images/LB.PNG)
 
 
 
 You should also create a new target group and name it appropriately:
 
-![Alt text](targetgroup.PNG)
+![Alt text](images/targetgroup.PNG)
 
 
 
@@ -203,13 +203,13 @@ We also want to select 'Target tracking scaling policy'
 
 
 
-![Alt text](DNS.PNG)
+![Alt text](images/DNS.PNG)
 
 
 
 Copy this and paste it into a web browser. If successful, you should then be able to see the sparta app page.
 
-![Alt text](lb_app_page.PNG)
+![Alt text](limages/b_app_page.PNG)
 
 
 
